@@ -38,11 +38,11 @@ CREATE TEMP TABLE TempData (
     risk_score DECIMAL(5,2)
 );
 
--- Step 2: Import data from CSV into TempData
+-- Import data from CSV into TempData
 COPY TempData
 FROM 'D:/Loan.csv' CSV HEADER;
 
--- Step 3: Clean up the columns if needed (convert from text to boolean)
+--  Clean up the columns if needed (convert from text to boolean)
 UPDATE TempData
 SET bankruptcy_history = CASE 
                             WHEN bankruptcy_history = '1' THEN TRUE 
@@ -110,7 +110,7 @@ INSERT INTO Customers (application_date, age, annual_income, credit_score, emplo
 SELECT DISTINCT application_date, age, annual_income, credit_score, employment_status, education_level, experience, marital_status, number_of_dependents, home_ownership_status, bankruptcy_history, savings_account_balance, checking_account_balance, total_assets, total_liabilities, monthly_income, utility_bills_payment_history, job_tenure, net_worth
 FROM TempData;
 
--- Step 5: Insert loan data, linking to the correct customer
+-- Insert loan data, linking to the correct customer
 INSERT INTO Loans (customer_id, loan_amount, loan_duration, loan_purpose, monthly_debt_payments, credit_card_utilization_rate, number_of_open_credit_lines, number_of_credit_inquiries, debt_to_income_ratio, previous_loan_defaults, payment_history, length_of_credit_history, base_interest_rate, interest_rate, monthly_loan_payment, total_debt_to_income_ratio, loan_approved, risk_score)
 SELECT c.customer_id, t.loan_amount, t.loan_duration, t.loan_purpose, t.monthly_debt_payments, t.credit_card_utilization_rate, t.number_of_open_credit_lines, t.number_of_credit_inquiries, t.debt_to_income_ratio, t.previous_loan_defaults, t.payment_history, t.length_of_credit_history, t.base_interest_rate, t.interest_rate, t.monthly_loan_payment, t.total_debt_to_income_ratio, t.loan_approved, t.risk_score
 FROM TempData t
@@ -120,7 +120,7 @@ JOIN Customers c
     AND t.annual_income = c.annual_income 
     AND t.application_date = c.application_date;
 
--- Step 6: Clean up
+-- Clean up
 DROP TABLE TempData;
 
 
