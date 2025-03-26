@@ -17,9 +17,9 @@ CREATE TEMP TABLE TempData (
     number_of_open_credit_lines INT,
     number_of_credit_inquiries INT,
     debt_to_income_ratio DECIMAL(5,2),
-    bankruptcy_history BOOLEAN,  -- Use BOOLEAN for direct import
+    bankruptcy_history BOOLEAN,  --  BOOLEAN for direct import
     loan_purpose VARCHAR(50),
-    previous_loan_defaults BOOLEAN, -- Use BOOLEAN for direct import
+    previous_loan_defaults BOOLEAN, -- BOOLEAN for direct import
     payment_history INT,
     length_of_credit_history INT,
     savings_account_balance DECIMAL(12,2),
@@ -34,7 +34,7 @@ CREATE TEMP TABLE TempData (
     interest_rate DECIMAL(5,4),
     monthly_loan_payment DECIMAL(12,2),
     total_debt_to_income_ratio DECIMAL(5,2),
-    loan_approved BOOLEAN, -- Use BOOLEAN for direct import
+    loan_approved BOOLEAN, --  BOOLEAN for direct import
     risk_score DECIMAL(5,2)
 );
 
@@ -42,7 +42,7 @@ CREATE TEMP TABLE TempData (
 COPY TempData
 FROM 'D:/Loan.csv' CSV HEADER;
 
---  Clean up the columns if needed (convert from text to boolean)
+--   (convert from text to boolean)
 UPDATE TempData
 SET bankruptcy_history = CASE 
                             WHEN bankruptcy_history = '1' THEN TRUE 
